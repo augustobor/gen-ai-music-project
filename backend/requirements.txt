@@ -1,4 +1,4 @@
-streamlit==1.32.2
+streamlit==1.37.0
 python-dotenv==1.0.1
 #langchain-openai==0.0.7 # Conflicting dependencies
 #langchain-core==0.1.30 # Conflicting dependencies
