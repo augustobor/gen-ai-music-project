@@ -1,0 +1,13 @@
+streamlit==1.32.2
+python-dotenv==1.0.1
+#langchain-openai==0.0.7 # Conflicting dependencies
+#langchain-core==0.1.30 # Conflicting dependencies
+#langchain==0.1.13 # Conflicting dependencies
+langchain-postgres==0.0.7
+#langchain-community==0.1.10 # Downgrade to a compatible version
+librosa==0.6.3
+numpy==1.26.4
+audiocraft==1.1.0
+torch==2.6.0
+redis==5.2.0
+ipython==8.22.1
