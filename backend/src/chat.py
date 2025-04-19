@@ -7,7 +7,10 @@ from langchain.schema.runnable import RunnablePassthrough, RunnableLambda
 
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
+from transformers import AutoTokenizer, AutoModelForTextToWaveform
 
+tokenizer = AutoTokenizer.from_pretrained("facebook/musicgen-medium")
+model = AutoModelForTextToWaveform.from_pretrained("facebook/musicgen-medium")
 from .utils import parse_retriver_output
 
 def chat_with_llm(retriever):
@@ -28,8 +31,9 @@ def chat_with_llm(retriever):
         """
 
     prompt = ChatPromptTemplate.from_template(prompt_text)
+    # tokenizer = AutoTokenizer.from_pretrained("facebook/musicgen-medium")
+    # model = AutoModelForTextToWaveform.from_pretrained("facebook/musicgen-medium")
     model = ChatOpenAI(temperature=0.6, model="gpt-4o-mini") # Replace gpt-4o-mini with music LLM
-    #model = MusicGen.get_pretrained("medium")
  
     rag_chain = ({
        "context": retriever | RunnableLambda(parse_retriver_output), "question": RunnablePassthrough(),

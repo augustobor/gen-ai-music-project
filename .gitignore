@@ -3,6 +3,8 @@ dist/
 .output/
 .json/
 
+# environment
+venv/
 # dependencies
 node_modules/
 
