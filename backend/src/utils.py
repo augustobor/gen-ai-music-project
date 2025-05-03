@@ -1,19 +1,15 @@
-#Data Loading
 import logging
 import librosa
 import numpy as np
 import os
 import hashlib
-import json
-import shutil
 import uuid
-
 from langchain.schema.document import Document
 from langchain_community.utilities.redis import get_client
-from database import COLLECTION_NAME, CONNECTION_STRING
 from langchain_openai import OpenAIEmbeddings
 from langchain_postgres.vectorstores import PGVector
 from langchain_community.storage import RedisStore
+from database import COLLECTION_NAME, CONNECTION_STRING
 
 client = get_client(
     url=os.environ.get("REDIS_URL"),

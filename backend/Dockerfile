@@ -12,17 +12,24 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     ninja-build \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
-    && pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir --default-timeout=10000 --upgrade pip setuptools wheel \
+    && pip install --no-cache-dir --default-timeout=10000 -r requirements.txt
+
+COPY requirements2.txt .
+RUN pip install --no-cache-dir --default-timeout=10000 -r requirements2.txt
 
 # Copy the rest of the application code into the container
 COPY . .
+
+ENV PYTHONPATH=/app
 
 # Expose the port the Flask app will run on
 EXPOSE 8000
 
 # Set the default command to run the Flask server
-CMD ["python", "src/main.py"]
+CMD ["python","-m","src.main"]

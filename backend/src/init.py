@@ -1,25 +1,20 @@
-import os, json, time, uuid, logging, hashlib, tempfile, shutil  
-from pathlib import Path  
-from base64 import b64decode  
-import torch, redis, streamlit as st  
+import os
+import logging
 import librosa
-import librosa.display
 import numpy as np
 
-from dotenv import load_dotenv; load_dotenv()  
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain.schema.document import Document
+from langchain.retrievers.multi_vector import MultiVectorRetriever
+from langchain_postgres.vectorstores import PGVector
+from langchain_community.utilities.redis import get_client
+from langchain_community.storage import RedisStore
+from database import COLLECTION_NAME, CONNECTION_STRING
 
-from IPython.display import display, HTML  
-from database import COLLECTION_NAME, CONNECTION_STRING  
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings  
-from langchain_core.messages import SystemMessage, HumanMessage  
-from langchain_core.prompts import ChatPromptTemplate  
-from langchain_core.output_parsers import StrOutputParser  
-from langchain.schema.runnable import RunnablePassthrough, RunnableLambda  
-from langchain.schema.document import Document  
-from langchain.retrievers.multi_vector import MultiVectorRetriever  
-from langchain_postgres.vectorstores import PGVector  
-from langchain_community.utilities.redis import get_client  
-from langchain_community.storage import RedisStore  
+load_dotenv()
 
 def load_music_data(file_paths):
     """
@@ -88,8 +83,8 @@ def initialize_retriever():
     id_key = "doc_id"
     vectorstore = PGVector(
             embeddings=OpenAIEmbeddings(),
-            collection_name=COLLECTION_NAME,
-            connection=CONNECTION_STRING,
+            collection_name=os.environ.get(COLLECTION_NAME),
+            connection=os.environ.get(CONNECTION_STRING),
             use_jsonb=True,
             )
     retrieval_loader = MultiVectorRetriever(vectorstore=vectorstore, docstore=store, id_key="doc_id")

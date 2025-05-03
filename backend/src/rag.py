@@ -1,26 +1,23 @@
 import os
 import json
-import hashlib
 import logging
-
-import streamlit as st
 from dotenv import load_dotenv
-
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain.schema.runnable import RunnablePassthrough, RunnableLambda
-
+from langchain.schema.runnable import RunnablePassthrough
 from langchain_postgres.vectorstores import PGVector
 from langchain_community.utilities.redis import get_client
 from langchain_community.storage import RedisStore
-
-from .utils import (
+from .init import (
     load_music_data,
     summarize_text_and_tables,
-    store_docs_in_retriever,
     initialize_retriever,
 )
+from .utils import (
+    store_docs_in_retriever,
+)
+
 from database import COLLECTION_NAME, CONNECTION_STRING
 
 load_dotenv()

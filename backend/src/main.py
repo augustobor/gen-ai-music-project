@@ -1,10 +1,8 @@
 import os
 import logging
-
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-
-from .utils import process_music
+from .rag import process_music
 from .chat import chat_with_llm
 
 load_dotenv()
@@ -45,5 +43,5 @@ def create_playlist():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))
+    port = int(os.environ.get('PORT'))
     app.run(debug=True, host='0.0.0.0', port=port)
