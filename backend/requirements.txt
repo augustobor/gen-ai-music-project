@@ -4,7 +4,7 @@ langchain-postgres==0.0.7
 librosa==0.6.3
 numpy==1.26.4
 audiocraft==1.1.0
-torch==2.6.0
+torch==2.7.1
 redis==5.2.0
 Flask==2.2.3
 Werkzeug==2.2.3
